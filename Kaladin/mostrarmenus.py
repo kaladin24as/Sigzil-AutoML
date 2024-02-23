@@ -13,7 +13,7 @@ def mostrar_menu():
 ## Los menus de machine learning    
 def mostrar_menu_machinelearning():
     print("Menu Machine learning")
-    print("0. Preprocesar datos")
+    print("0. AutoML (TPOT, AutoKeras)")
     print("1. Aprendizaje supervisado")
     print("2. Aprendizaje no supervisado")
     print("3. Ayuda")
@@ -293,5 +293,19 @@ def mostrar_menu_neural_network_models():
     print("Menu Neural Network Models")
     print("1. MLPClassifier")
     print("2. MLPRegressor")
+    print("3. Volver al menu principal")
+    print("4. Salir")
+    
+def mostrar_menu_automl():
+    print("Menu AutoML")
+    print("1. TPOT")
+    print("2. AutoKeras")
+    print("3. Volver al menu principal")
+    print("4. Salir")
+    
+def mostrar_menu_tpot():
+    print("Menu TPOT")
+    print("1. TPOTClassifier")
+    print("2. TPOTRegressor")
     print("3. Volver al menu principal")
     print("4. Salir")

@@ -21,6 +21,8 @@ from linearfunctions import *
 from mostrarmenus import * 
 from sklearn.linear_model import ARDRegression, BayesianRidge, ElasticNet, LassoCV, LassoLars, LogisticRegression, MultiTaskElasticNet, MultiTaskLasso, PassiveAggressiveClassifier, PassiveAggressiveRegressor, Perceptron, TweedieRegressor
 from sklearn.preprocessing import LabelEncoder
+from tpot import TPOTClassifier  
+from tpot import TPOTRegressor  
 
 
 
@@ -34,6 +36,7 @@ def machine_learning(opcion_principal):
             X, y = preprocesar_datos()        
             mostrar_menu_machinelearning()
             subopcion_machinelearning = input("Selecciona una opcion: ")
+            AutoML(subopcion_machinelearning, X, y)
             aprendizaje_supervisado(subopcion_machinelearning, X, y)
             aprendizaje_no_supervisado(subopcion_machinelearning)
             if subopcion_machinelearning == "3":
@@ -46,6 +49,52 @@ def machine_learning(opcion_principal):
                 print("Opcion no valida.")
 
                 
+def AutoML(subopcion_machinelearning, X, y):
+    if subopcion_machinelearning == "0":
+        while True:
+            mostrar_menu_automl()
+            subopcion_automl = input("Selecciona una opcion: ")
+            TPOT(subopcion_automl, X, y)    
+            if subopcion_automl == "3":
+                break
+            elif subopcion_automl == "4":
+                exit()
+            else:
+                print("Opcion no valida.")
+                
+def TPOT(subopcion_automl, X, y):
+    if subopcion_automl == "1":
+        while True:
+            mostrar_menu_tpot()
+            subopcion_tpot = input("Selecciona una opcion: ")
+            tpotclassifier(subopcion_tpot, X, y)
+            tpotregressor(subopcion_tpot, X, y)
+            if subopcion_tpot == "3":
+                break
+            elif subopcion_tpot == "4":
+                exit()
+            else:
+                print("Opcion no valida.")
+        
+def tpotclassifier(subopcion_tpot, X, y):
+    if subopcion_tpot == "1":
+        if isinstance(X, pd.DataFrame):
+            X = X.apply(pd.to_numeric, errors='coerce')
+        if isinstance(y, pd.Series):
+            y = pd.to_numeric(y, errors='coerce')
+        
+        # Crear y entrenar el modelo TPOTClassifier
+        modelo = TPOTClassifier()
+        modelo.fit(X, y)
+        
+        # Evaluar y mostrar la puntuación del modelo
+        score = modelo.score(X, y)
+        print("Puntuación del modelo:", score)
+        
+def tpotregressor(subopcion_tpot, X, y):
+    if subopcion_tpot == "2":
+        modelo = TPOTRegressor(X, y)
+        modelo.fit(X, y)
                 
 def preprocesar_datos(): 
     file_name = input("Introduce el nombre del archivo de entrenamiento del modelo: ")
